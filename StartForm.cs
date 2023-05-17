@@ -8,6 +8,7 @@ namespace Library2305
     public partial class StartForm : System.Windows.Forms.Form
     {
         AppMenu menu;
+        Data data;
 
         public StartForm()
         {
@@ -21,6 +22,9 @@ namespace Library2305
             (Text, Icon) = (AppTitle, AppIcon);
             MakeMenu();
             IsMdiContainer = true;
+            data = new ContextFactory().CreateDbContext(null);
+            Author author = data.Authors.FirstOrDefault();
+            MessageBox.Show(author.LastName);
             //WindowState = FormWindowState.Maximized;
         }
 

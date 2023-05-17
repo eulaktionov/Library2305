@@ -8,17 +8,29 @@
 	меню
 		вызовы всех форм
 	базовая внутренняя форма
-	формы проекта
-	создать новую ветку (СВН)
+		все формы проекта
+	создать новую ветку (branch)
 
 создать контекст
 	пакеты
+		Microsoft.EntityFrameworkCore
+		Microsoft.EntityFrameworkCore.Tools:
+		Microsoft.EntityFrameworkCore.SqlServer
+		Microsoft.Extensions.Configuration;
+		Microsoft.Extensions.Configuration.Json.
 	модель
 	контекст
-	начальные данные
+	config.json F4
+	//начальные данные > не будем
+		связь много-много еще не проверена
 	создание контекста
 	миграция
-	СВН
+		Add-Migration Init (имя любое)
+		Update-Database
+		(для удаления Remove-Migration)	
+	начальные данные в БД
+		
+	branch
 
 создать однотабличную форму
 	виртуальная настройка грида
