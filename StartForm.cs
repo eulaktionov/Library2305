@@ -1,9 +1,14 @@
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics;
+
 using static Library2305.Properties.Resources;
 
 namespace Library2305
 {
-    public partial class StartForm : Form
+    public partial class StartForm : System.Windows.Forms.Form
     {
+        AppMenu menu;
+
         public StartForm()
         {
             InitializeComponent();
@@ -14,8 +19,45 @@ namespace Library2305
         void Start()
         {
             (Text, Icon) = (AppTitle, AppIcon);
+            MakeMenu();
             IsMdiContainer = true;
-            WindowState = FormWindowState.Maximized;
+            //WindowState = FormWindowState.Maximized;
+        }
+
+        void MakeMenu()
+        {
+            menu = new()
+            {
+                Open = OpenInnerForm,
+                Save = Save,
+                Exit = () => Close()
+            };
+            Controls.Add(menu);
+        }
+
+        void OpenInnerForm(AppForm id)
+        {
+            DataForm form = 
+                MdiChildren.Select(f => f as DataForm).
+                FirstOrDefault(f => f.Id == id);
+
+            if(form == null)
+            {
+                form = new(id);
+                form.MdiParent = this;
+                form.Show();
+            }
+
+            if(form.WindowState == FormWindowState.Minimized)
+            {
+                form.WindowState = FormWindowState.Normal;
+            }
+            form.Activate();
+        }
+
+        void Save()
+        {
+            Debug.WriteLine("Save data!");
         }
 
         void End()

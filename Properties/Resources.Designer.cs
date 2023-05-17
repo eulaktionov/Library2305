@@ -78,5 +78,41 @@ namespace Library2305.Properties {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Authors.
+        /// </summary>
+        internal static string AuthorsTitle {
+            get {
+                return ResourceManager.GetString("AuthorsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Books.
+        /// </summary>
+        internal static string BooksTitle {
+            get {
+                return ResourceManager.GetString("BooksTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Readers.
+        /// </summary>
+        internal static string ReadersTitle {
+            get {
+                return ResourceManager.GetString("ReadersTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Records.
+        /// </summary>
+        internal static string RecordsTitle {
+            get {
+                return ResourceManager.GetString("RecordsTitle", resourceCulture);
+            }
+        }
     }
 }

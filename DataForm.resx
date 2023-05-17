@@ -117,23 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AppIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\books_blue.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AppTitle" xml:space="preserve">
-    <value>Library by EFC</value>
-  </data>
-  <data name="AuthorsTitle" xml:space="preserve">
-    <value>Authors</value>
-  </data>
-  <data name="BooksTitle" xml:space="preserve">
-    <value>Books</value>
-  </data>
-  <data name="ReadersTitle" xml:space="preserve">
-    <value>Readers</value>
-  </data>
-  <data name="RecordsTitle" xml:space="preserve">
-    <value>Records</value>
-  </data>
 </root>
