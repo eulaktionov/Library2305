@@ -2,17 +2,25 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics;
 
 using static Library2305.Properties.Resources;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library2305
 {
     public partial class StartForm : System.Windows.Forms.Form
     {
-        AppMenu menu;
-        Data data;
+        AppMenu? menu;
+        readonly Data? data;
 
         public StartForm()
         {
             InitializeComponent();
+
+            data = new ContextFactory().CreateDbContext(Array.Empty<string>());
+            data?.Authors.Load();
+            data?.Books.Load();
+            data?.Readers.Load();
+            data?.Records.Load();
+
             Load += (s, e) => Start();
             FormClosed += (s, e) => End();
         }
@@ -22,9 +30,6 @@ namespace Library2305
             (Text, Icon) = (AppTitle, AppIcon);
             MakeMenu();
             IsMdiContainer = true;
-            data = new ContextFactory().CreateDbContext(null);
-            Author author = data.Authors.FirstOrDefault();
-            MessageBox.Show(author.LastName);
             //WindowState = FormWindowState.Maximized;
         }
 
@@ -41,13 +46,13 @@ namespace Library2305
 
         void OpenInnerForm(AppForm id)
         {
-            DataForm form = 
-                MdiChildren.Select(f => f as DataForm).
-                FirstOrDefault(f => f.Id == id);
+            DataForm? form = MdiChildren?
+                .Select(f => f as DataForm)
+                .FirstOrDefault(f => f!.Id == id);
 
             if(form == null)
             {
-                form = new(id);
+                form = new(id, data);
                 form.MdiParent = this;
                 form.Show();
             }
@@ -62,11 +67,12 @@ namespace Library2305
         void Save()
         {
             Debug.WriteLine("Save data!");
+            data?.SaveChanges();
         }
 
         void End()
         {
-
+            Save();
         }
     }
 }

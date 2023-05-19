@@ -15,9 +15,9 @@ namespace Library2305
     }
     internal class AppMenu : MenuStrip
     {
-        public Action<AppForm> Open { get; init; }
-        public Action Save { get; init; }
-        public Action Exit { get; init; }
+        public Action<AppForm>? Open { get; init; }
+        public Action? Save { get; init; }
+        public Action? Exit { get; init; }
 
         public AppMenu() => Items.AddRange(new ToolStripItem[]
         {

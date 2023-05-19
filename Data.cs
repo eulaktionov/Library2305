@@ -19,18 +19,33 @@ namespace Library2305
         public string? FirstName { get; set; }
         public string LastName { get; set; }
         public List<Book> Books { get; set; } = new();
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName ?? string.Empty}";
+        }
     }
     public class Book
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Author> Authors { get; set; } = new();
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
     public class Reader
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName}";
+        }
     }
     public class Record
     {
