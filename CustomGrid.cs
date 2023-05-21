@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using static Library2305.Properties.Resources;
 
 namespace Library2305
 {
@@ -15,34 +18,13 @@ namespace Library2305
             AllowUserToDeleteRows = true;
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             Dock = DockStyle.Fill;
-            DataError += (s, e) => MessageBox.Show(e.ToString());
-        }
+            DataError += (s, e) =>
+            {
+                e.ThrowException = false; // Отключаем выбрасывание исключения
+                MessageBox.Show("Data entry error!", AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CurrentCell = this[e.ColumnIndex, e.RowIndex]; // Возвращаем фокус на текущую ячейку
+            };
 
-        public virtual void Customize()
-        {
-            Columns["Id"].DisplayIndex = 0;
-            Columns["Id"].ReadOnly = true;
-            Columns["Id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-        }
-
-        public virtual DataGridViewComboBoxColumn ConvertToCombo<T>
-            (string colName, List<T> source,
-            string headerText,
-            string valueName, string memberName)
-        {
-            Columns.Remove(colName);
-
-            DataGridViewComboBoxColumn col = new ();
-
-            col.DataPropertyName = colName;
-
-            col.DataSource = source;
-            col.ValueMember = valueName;
-            col.DisplayMember = memberName;
-            col.HeaderText = headerText;
-
-            Columns.Add(col);
-            return col;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 using static Library2305.Properties.Resources;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library2305
 {
@@ -22,7 +23,7 @@ namespace Library2305
             data?.Records.Load();
 
             Load += (s, e) => Start();
-            FormClosed += (s, e) => End();
+            FormClosing += (s, e) => e.Cancel = !Save();
         }
 
         void Start()
@@ -30,7 +31,9 @@ namespace Library2305
             (Text, Icon) = (AppTitle, AppIcon);
             MakeMenu();
             IsMdiContainer = true;
-            //WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Maximized;
+            (menu!.Items[0] as ToolStripMenuItem)?
+                .DropDownItems[0].PerformClick();
         }
 
         void MakeMenu()
@@ -52,7 +55,11 @@ namespace Library2305
 
             if(form == null)
             {
-                form = new(id, data);
+                form = id switch
+                {
+                    AppForm.Records => new RecordForm(id, data),
+                    _ => new DataForm(id, data)
+                };
                 form.MdiParent = this;
                 form.Show();
             }
@@ -64,15 +71,20 @@ namespace Library2305
             form.Activate();
         }
 
-        void Save()
+        bool Save()
         {
-            Debug.WriteLine("Save data!");
-            data?.SaveChanges();
-        }
-
-        void End()
-        {
-            Save();
+            try
+            {
+                data?.SaveChanges();
+                Debug.WriteLine("Save data!");
+                return true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.InnerException?.Message);
+                return false;
+            }
         }
     }
 }

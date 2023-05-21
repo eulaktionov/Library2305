@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.VisualBasic.ApplicationServices;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library2305
 {
@@ -50,11 +51,18 @@ namespace Library2305
     public class Record
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Книга обязательна")]
         public Book Book { get; set; }
+        [Required(ErrorMessage = "Читатель обязателен")]
         public Reader Reader { get; set; }
-        public DateTime ReceiveDate { get; set; }
+        public DateTime ReceiveDate { get; set; } = DateTime.Now;
         public DateTime? ReturnDate { get; set; }
+        public override string ToString()
+        {
+            return $"{Book} {Reader} {ReceiveDate} {ReturnDate}";
+        }
     }
+
     public class Data : DbContext
     {
         public DbSet<Author> Authors { get; set; }
@@ -77,14 +85,13 @@ namespace Library2305
         public Data CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<Data>();
-            ConfigurationBuilder builder = new ConfigurationBuilder();
+            ConfigurationBuilder builder = new();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("config.json");
             IConfigurationRoot config = builder.Build();
 
             string connectionString = config.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString); 
-                //opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds));
             return new Data(optionsBuilder.Options);
         }
     }
